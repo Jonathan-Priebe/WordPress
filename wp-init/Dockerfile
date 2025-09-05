@@ -1,0 +1,22 @@
+FROM wordpress:latest
+
+# Install WP-CLI
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    chmod +x wp-cli.phar && \
+    mv wp-cli.phar /usr/local/bin/wp
+
+# Install MySQL-Client
+RUN apt-get update && apt-get install -y default-mysql-client
+
+# Copy setup script
+COPY setup.sh /setup.sh
+RUN chmod +x /setup.sh
+
+## Override default PHP memory limit to prevent WP-CLI from crashing during core download
+COPY php.ini /usr/local/etc/php/conf.d/memory-limit.ini
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Run setup script on container start
+CMD ["bash", "/setup.sh"]
