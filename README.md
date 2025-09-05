@@ -71,11 +71,16 @@ All key settings are controlled via environment variables and Docker volumes. Yo
 http://YOUR_IP_OR_DOMAIN:YOUR_WP_PORT
 ```
 
+- Admin Interface:
+```bash
+http://YOUR_IP_OR_DOMAIN:YOUR_WP_PORT/wp-admin
+```
+
 ## Usage  
 
 1. **Environment Configuration**
 
-Edit .env to define your WordPress and MySQL settings [example.env](example.env)
+Edit .env to define your WordPress, MySQL settings and Admin Interface in [example.env](example.env)
 
 2. **setup.sh Script**
 
