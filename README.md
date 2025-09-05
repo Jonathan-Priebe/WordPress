@@ -81,15 +81,13 @@ Edit .env to define your WordPress and MySQL settings [example.env](example.env)
 
 The setup.sh script automates:
 
-WordPress core download
-
-wp-config.php creation
-
-Database readiness check
-
-WordPress installation via WP-CLI
-
-Apache startup
+```
+ - WordPress core download
+ - wp-config.php creation
+ - Database readiness check
+ - WordPress installation via WP-CLI
+ - Apache startup
+```
 
 3. **php.ini**
 
