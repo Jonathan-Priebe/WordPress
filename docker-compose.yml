@@ -18,6 +18,7 @@ services:
       - db
     networks:
       - wordpress_net
+    restart: on-failure
 
   db:
     image: mysql:5.7
@@ -31,6 +32,7 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - wordpress_net
+    restart: on-failure
 
 volumes:
   wordpress_data: {}
