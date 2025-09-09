@@ -1,4 +1,5 @@
 # WordPress – Dockerised 🐳
+A lightweight and customizable Docker-based setup for running WordPress locally. Includes a MySQL database and persistent volumes for seamless development and testing.
 
 ## Project Handover  
 
@@ -7,15 +8,12 @@
 ---
 
 ## Table of Contents  
-- [Project Overview](#project-overview)  
+- [Prerequisites](#prerequisites)  
 - [Quickstart](#quickstart)  
 - [Usage](#usage)  
 - [Me](#me)
 
 ---
-
-## Project Overview  
-A lightweight and customizable Docker-based setup for running WordPress locally. Includes a MySQL database and persistent volumes for seamless development and testing.
 
 ## Prerequisites  
 Before running this project, make sure the following tools are installed on your system:
@@ -38,8 +36,6 @@ Before running this project, make sure the following tools are installed on your
     git clone https://github.com/Jonathan-Priebe/Minecraft-Server.git
     cd Minecraft-Server
     ```
-
-### Configuration Overview
 
 All key settings are controlled via environment variables and Docker volumes. You can adjust them in the [Docker-Compose](./docker-compose.yml) file.
 
@@ -64,7 +60,13 @@ All key settings are controlled via environment variables and Docker volumes. Yo
   docker compose down
   ```
 
-3. **Access WordPress**
+## Usage  
+
+1. **Environment Configuration**
+
+Edit .env to define your WordPress, MySQL settings and Admin Interface in [example.env](example.env)
+
+2. **Access WordPress**
 
 - Once running, access WordPress at:
 ```bash
@@ -75,28 +77,6 @@ http://YOUR_IP_OR_DOMAIN:YOUR_WP_PORT
 ```bash
 http://YOUR_IP_OR_DOMAIN:YOUR_WP_PORT/wp-admin
 ```
-
-## Usage  
-
-1. **Environment Configuration**
-
-Edit .env to define your WordPress, MySQL settings and Admin Interface in [example.env](example.env)
-
-2. **setup.sh Script**
-
-The setup.sh script automates:
-
-```
- - WordPress core download
- - wp-config.php creation
- - Database readiness check
- - WordPress installation via WP-CLI
- - Apache startup
-```
-
-3. **php.ini**
-
-- Tune PHP memory limits in the [php.ini](./wp-init/php.ini)
 
 ## Me  
 

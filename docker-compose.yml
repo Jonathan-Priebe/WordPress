@@ -1,28 +1,27 @@
 
 services:
   wordpress:
-    build: ./wp-init
+    image: wordpress:latest
+    container_name: wordpress
     ports:
       - "${WORDPRESS_PORT}:80"
+    restart: on-failure
     environment:
       WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-      WP_ADMIN_USER: ${WP_ADMIN_USER}
-      WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
-      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
     volumes:
       - wordpress_data:/var/www/html
     depends_on:
       - db
     networks:
       - wordpress_net
-    restart: on-failure
 
   db:
     image: mysql:5.7
-    restart: always
+    container_name: mysql
+    restart: on-failure
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
@@ -32,7 +31,54 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - wordpress_net
-    restart: on-failure
+
+  wpcli:
+    image: wordpress:cli
+    container_name: wpcli
+    depends_on:
+      - wordpress
+    entrypoint: |
+      sh -c '
+        set -e
+    
+        echo "⏳ Waiting for MySQL to be ready..."
+        until nc -z $${WORDPRESS_DB_HOST%%:*} 3306; do
+          echo "⏱️  MySQL not ready yet..."
+          sleep 3
+        done
+        echo "✅ MySQL is reachable."
+    
+        if ! wp core is-installed --path=/var/www/html; then
+          echo "🔧 WordPress not installed. Starting setup..."
+          wp core install \
+            --path=/var/www/html \
+            --url="$${WORDPRESS_SITE_URL}" \
+            --title="My Blog" \
+            --admin_user="$${WP_ADMIN_USER}" \
+            --admin_password="$${WP_ADMIN_PASSWORD}" \
+            --admin_email="$${WP_ADMIN_EMAIL}"
+          wp plugin install akismet --activate
+          wp theme install twentytwentytwo --activate
+          echo "✅ WordPress installation complete."
+        else
+          echo "✅ WordPress is already installed. Skipping setup."
+        fi
+    
+        exit 0
+      '
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_SITE_URL: ${WORDPRESS_SITE_URL}
+      WP_ADMIN_USER: ${WP_ADMIN_USER}
+      WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - wordpress_net
 
 volumes:
   wordpress_data: {}
