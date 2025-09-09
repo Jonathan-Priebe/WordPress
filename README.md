@@ -33,8 +33,8 @@ Before running this project, make sure the following tools are installed on your
 1. **Clone the repository**
 
     ```bash
-    git clone https://github.com/Jonathan-Priebe/Minecraft-Server.git
-    cd Minecraft-Server
+    git clone https://github.com/Jonathan-Priebe/WordPress.git
+    cd WordPress
     ```
 
 All key settings are controlled via environment variables and Docker volumes. You can adjust them in the [Docker-Compose](./docker-compose.yml) file.
