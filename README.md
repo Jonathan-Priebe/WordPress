@@ -66,7 +66,42 @@ All key settings are controlled via environment variables and Docker volumes. Yo
 
 Edit .env to define your WordPress, MySQL settings and Admin Interface in [example.env](example.env)
 
-2. **Access WordPress**
+2. **Customize the following variables to match your desired setup**
+
+### 🖥️ WordPress Settings
+
+| Variable             | Description                                      | Example                     |
+|----------------------|--------------------------------------------------|-----------------------------|
+| `WORDPRESS_PORT`     | Port exposed to access WordPress in browser      | `8181`                      |
+| `WORDPRESS_DB_HOST`  | Host and port of the MySQL database              | `db:3306`                   |
+| `WORDPRESS_DB_NAME`  | Name of the WordPress database                   | `wordpress`                 |
+| `WORDPRESS_DB_USER`  | Database username for WordPress                  | `wordpress`                 |
+| `WORDPRESS_DB_PASSWORD` | Database password for WordPress              | `wordpress`                 |
+| `WORDPRESS_SITE_URL` | Public URL to access your WordPress site        | `http://159.69.106.42:8181`|
+
+---
+
+### 🗄️ MySQL Settings
+
+| Variable             | Description                                      | Example                     |
+|----------------------|--------------------------------------------------|-----------------------------|
+| `MYSQL_DATABASE`     | Name of the database to create                   | `wordpress`                 |
+| `MYSQL_USER`         | MySQL user                                       | `wordpress`                 |
+| `MYSQL_PASSWORD`     | MySQL user password                              | `wordpress`                 |
+| `MYSQL_ROOT_PASSWORD`| Root password for MySQL                          | `root`                      |
+
+---
+
+### 🔐 WordPress Admin Setup
+
+| Variable             | Description                                      | Example                     |
+|----------------------|--------------------------------------------------|-----------------------------|
+| `WP_ADMIN_USER`      | Username for WordPress admin                     | `admin`                     |
+| `WP_ADMIN_PASSWORD`  | Password for WordPress admin                     | `securepassword123`         |
+| `WP_ADMIN_EMAIL`     | Email address for WordPress admin                | `admin@example.com`         |
+
+
+3. **Access WordPress**
 
 - Once running, access WordPress at:
 ```bash
